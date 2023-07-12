@@ -5,5 +5,4 @@ const NotFound = (req: Request, res: Response, next: NextFunction) => {
   const error = new Error(`🔍 - Not Foundm - ${req.originalUrl}`);
   next(error);
 };
-
 export default NotFound;

@@ -2,6 +2,7 @@ import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import corsOptions from './config/corsOptions';
 
 import * as middlewares from './middlewares';
 import MessageResponse from './interfaces/MessageResponse';
@@ -12,7 +13,7 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(helmet());
-//app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get<{}, MessageResponse>('/', (req, res) => {
@@ -35,28 +36,11 @@ app.get<{}, {}>('/search', async (req, res) => {
   return res.json(data);
 });
 
-app.get<{}, {}>('/search:', async (req, res) => {
-  const response = await fetch('https://api.thecatapi.com/v1/breeds', {
-    method: 'get',
-    headers,
-  });
-
-  const data = await response.json();
-  return res.json(data);
+app.get<{}, {}>('/most-searched', async (req, res) => {
+  return res.json(['bali', 'orie', 'bure', 'mcoo']);
 });
 
-app.get<{}, {}>('/most-resent:count', async (req, res) => {
-  console.log(req.body);
-  const response = await fetch('https://api.thecatapi.com/v1/breeds', {
-    method: 'get',
-    headers,
-  });
-
-  const data = await response.json();
-  return res.json(data);
-});
-
-app.get<{}, {}>('/breed', async (req, res) => {
+app.get<{}, {}>('/search-by-breed', async (req, res) => {
   console.log(req.body.id);
   const response = await fetch(
     `https://api.thecatapi.com/v1/breeds/search?q=${req.body.id}`,

@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { raw } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -36,14 +36,28 @@ app.get<{}, {}>('/search', async (req, res) => {
   return res.json(data);
 });
 
-app.get<{}, {}>('/most-searched', async (req, res) => {
-  return res.json(['bali', 'orie', 'bure', 'mcoo']);
+app.get<{ count: string }, {}>('/most-searched/:count', async (req, res) => {
+  const mostSearched = [
+    'toyg',
+    'bali',
+    'orie',
+    'abys',
+    'soma',
+    'amau',
+    'bslo',
+    'java',
+    'norw',
+    'tvan',
+  ];
+
+  const pick = parseInt(req.params.count) == 4 ? 4 : 10;
+  return res.json(mostSearched.slice(0, pick));
 });
 
-app.get<{}, {}>('/search-by-breed', async (req, res) => {
-  console.log(req.body.id);
+app.get<{ id: string }, {}>('/breed/:id', async (req, res) => {
+  console.log(req.params, 'breddd');
   const response = await fetch(
-    `https://api.thecatapi.com/v1/breeds/search?q=${req.body.id}`,
+    `https://api.thecatapi.com/v1/breeds/search?q=${req.params.id}`,
     {
       method: 'get',
       headers,
@@ -54,9 +68,9 @@ app.get<{}, {}>('/search-by-breed', async (req, res) => {
   return res.json(data);
 });
 
-app.get<{}, {}>('/images/:id', async (req, res) => {
+app.get<{ id: string }, {}>('/images/:id', async (req, res) => {
   const response = await fetch(
-    `https://api.thecatapi.com/v1/images/search?limit=8&breed_ids=${req.body.id}`,
+    `https://api.thecatapi.com/v1/images/search?limit=8&breed_ids=${req.params.id}`,
     {
       method: 'get',
       headers,

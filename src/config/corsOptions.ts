@@ -1,6 +1,6 @@
 const allowedOrigins = [
   'http://localhost:3000',
-  'https://cat-wiki.iamstarcode.com/',
+  'https://cat-wiki.iamstarcode.com',
 ];
 
 const corsOptions = {

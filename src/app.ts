@@ -1,7 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
+import fetch from 'node-fetch';
 import corsOptions from './config/corsOptions';
 
 import * as middlewares from './middlewares';

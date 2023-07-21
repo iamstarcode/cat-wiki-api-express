@@ -62,7 +62,7 @@ app.get<{ id: string }, {}>('/breed/:id', async (req, res) => {
     {
       method: 'get',
       headers,
-    },
+    }
   );
 
   return res.json(data);
@@ -74,7 +74,7 @@ app.get<{ id: string }, {}>('/images/:id', async (req, res) => {
     {
       method: 'get',
       headers,
-    },
+    }
   );
 
   return res.json(data);

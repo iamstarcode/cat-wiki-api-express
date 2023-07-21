@@ -1,6 +1,7 @@
 const allowedOrigins = [
   'http://localhost:3000',
   'https://cat-wiki.iamstarcode.com',
+  'https://cat-wiki-red.vercel.app',
 ];
 
 const corsOptions = {

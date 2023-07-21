@@ -1,4 +1,7 @@
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://cat-wiki.iamstarcode.com/',
+];
 
 const corsOptions = {
   origin: (origin: any, callback: any) => {

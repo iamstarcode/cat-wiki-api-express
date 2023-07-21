@@ -3,11 +3,11 @@ import express from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
-import fetch from 'node-fetch';
 import corsOptions from './config/corsOptions';
 
 import * as middlewares from './middlewares';
 import MessageResponse from './interfaces/MessageResponse';
+import axios from 'axios';
 
 require('dotenv').config();
 
@@ -29,12 +29,11 @@ const headers = {
 };
 
 app.get<{}, {}>('/search', async (req, res) => {
-  const response = await fetch('https://api.thecatapi.com/v1/breeds', {
+  const { data } = await axios.get('https://api.thecatapi.com/v1/breeds', {
     method: 'get',
     headers,
   });
 
-  const data = await response.json();
   return res.json(data);
 });
 
@@ -58,7 +57,7 @@ app.get<{ count: string }, {}>('/most-searched/:count', async (req, res) => {
 
 app.get<{ id: string }, {}>('/breed/:id', async (req, res) => {
   console.log(req.params, 'breddd');
-  const response = await fetch(
+  const { data } = await axios.get(
     `https://api.thecatapi.com/v1/breeds/search?q=${req.params.id}`,
     {
       method: 'get',
@@ -66,12 +65,11 @@ app.get<{ id: string }, {}>('/breed/:id', async (req, res) => {
     }
   );
 
-  const data = await response.json();
   return res.json(data);
 });
 
 app.get<{ id: string }, {}>('/images/:id', async (req, res) => {
-  const response = await fetch(
+  const { data } = await axios.get(
     `https://api.thecatapi.com/v1/images/search?limit=8&breed_ids=${req.params.id}`,
     {
       method: 'get',
@@ -79,7 +77,6 @@ app.get<{ id: string }, {}>('/images/:id', async (req, res) => {
     }
   );
 
-  const data = await response.json();
   return res.json(data);
 });
 
